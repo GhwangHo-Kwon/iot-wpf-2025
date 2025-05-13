@@ -15,6 +15,8 @@ namespace WpfBookRentalShop01.ViewModels
     {
         private readonly IDialogCoordinator dialogCoordinator;
 
+        public ObservableCollection<KeyValuePair<string, string>> Divisions { get; set; }
+
         private ObservableCollection<Book> _books;
         public ObservableCollection<Book> Books {
             get => _books;
@@ -26,15 +28,6 @@ namespace WpfBookRentalShop01.ViewModels
             get => _selectedBook;
             set {
                 SetProperty(ref _selectedBook, value);
-                _isUpdate = true; // 수정상태
-            }
-        }
-
-        private Divisions _divisions;
-        public Divisions Divisions {
-            get => _divisions;
-            set{
-                SetProperty(ref _divisions, value);
                 _isUpdate = true; // 수정상태
             }
         }
@@ -95,13 +88,14 @@ namespace WpfBookRentalShop01.ViewModels
                     }
                     else
                     {
-                        query = @"INSERT INTO membertbl (author, division, names, releasedate, isbn, price)
+                        query = @"INSERT INTO bookstbl (author, division, names, releasedate, isbn, price)
                                                  VALUES (@author, @division, @names, @releasedate, @isbn, @price);";
                     }
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@author", SelectedBook.Author);
                     cmd.Parameters.AddWithValue("@division", SelectedBook.Division);
+                    cmd.Parameters.AddWithValue("@names", SelectedBook.Names);
                     cmd.Parameters.AddWithValue("@releasedate", SelectedBook.ReleaseDate);
                     cmd.Parameters.AddWithValue("@isbn", SelectedBook.ISBN);
                     cmd.Parameters.AddWithValue("@price", SelectedBook.Price);
@@ -126,24 +120,64 @@ namespace WpfBookRentalShop01.ViewModels
                 await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
             }
 
+            LoadControlFromDb();
             LoadGridFromDb();
         }
 
         [RelayCommand]
-        public void DelData()
+        public async void DelData()
         {
+            if (!_isUpdate)
+            {
+                await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "데이터를 선택하세요");
+                return;
+            }
 
+            var result = await this.dialogCoordinator.ShowMessageAsync(this, "삭제여부", "삭제하시겠습니까?", MessageDialogStyle.AffirmativeAndNegative);
+            if (result == MessageDialogResult.Negative) return;  // Cancel했으면 메서드 빠져나감
+
+            try
+            {
+                string query = "DELETE FROM bookstbl WHERE idx = @idx";
+
+                using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@idx", SelectedBook.Idx);
+
+                    var resultCnt = cmd.ExecuteNonQuery();
+
+                    if (resultCnt > 0)
+                    {
+                        Common.LOGGER.Info($"멤버 데이터 {SelectedBook.Idx} / {SelectedBook.Names} 삭제완료");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제성공");
+                    }
+                    else
+                    {
+                        Common.LOGGER.Warn("멤버 데이터 삭제 실패!");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제실패!!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LOGGER.Error(ex.Message);
+                await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
+            }
+
+            LoadGridFromDb();
         }
 
         private async void LoadControlFromDb()
         {
-            string query = "SELECT division, names FROM divtbl";
-
-            ObservableCollection<Divisions> divisions = new ObservableCollection<Divisions>();
-
-            using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
+            try
             {
-                try
+                string query = "SELECT division, names FROM divtbl";
+
+                ObservableCollection<KeyValuePair<string, string>> divisions = new ObservableCollection<KeyValuePair<string, string>>();
+
+                using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
                 {
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -152,24 +186,19 @@ namespace WpfBookRentalShop01.ViewModels
                     while (reader.Read())
                     {
                         var division = reader.GetString("division");
-                        var dnames = reader.GetString("names");
+                        var names = reader.GetString("names");
 
-                        divisions.Add(new Divisions
-                        {
-                            Division = division,
-                            DNames = dnames
-                        });
+                        divisions.Add(new KeyValuePair<string, string>(division, names));
                     }
+                }
 
-                    Divisions = divisions;
-                }
-                catch (MySqlException ex)
-                {
-                    Common.LOGGER.Error(ex.Message);
-                    await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
-                }
+                Divisions = divisions;
             }
-
+            catch (MySqlException ex)
+            {
+                Common.LOGGER.Error(ex.Message);
+                await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
+            }
             Common.LOGGER.Info("책종류 데이터 로드");
         }
 

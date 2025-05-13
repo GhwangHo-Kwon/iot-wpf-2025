@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace WpfBookRentalShop01.Models
 {
-    public class Divisions : ObservableObject
+    public class Division : ObservableObject
     {
-        private string _division;
+        private string _divisions;
         private string _dnames;
 
-        public string Division
+        public string Divisions
         {
-            get => _division;
-            set => SetProperty(ref _division, value);
+            get => _divisions;
+            set => SetProperty(ref _divisions, value);
         }
         public string DNames
         {

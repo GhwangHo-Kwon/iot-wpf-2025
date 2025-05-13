@@ -66,7 +66,7 @@
                     DisplayMemberPath="Value"
                     ItemsSource="{Binding Divisions}"
                     mah:TextBoxHelper.Watermark="장르"
-                    SelectedValue="{Binding SelectedBook.DNames}" />
+                    SelectedValue="{Binding SelectedBook.Division}" />
 
                     <TextBox Grid.Row="2" Margin="3"
                     mah:TextBoxHelper.AutoWatermark="True"
