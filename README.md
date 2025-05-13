@@ -276,10 +276,22 @@ IoT 개발자 WPF 학습리포지토리 2025
 8. MemberView.xaml, RentalView.xaml 화면작업
 9. ViewModel들 작업
 
+    <img src="./image/wpf0012.png" width="650">
+
 #### DB연결 CRUD 연습시 추가 필요사항
 - [x] 여러번 나오는 로직 메서드화
 - [x] NLog로 각 기능 동작시 로그남기기. 공통화작업
 - [x] 연결문자열 Common으로 이전
 - [x] 종료 메뉴 다이얼로그 MetroUI로 변경
 - [x] MahApps.Metro 메시지형태로 변경
-- [ ] 삭제여부 메시지박스 추가
+- [x] 삭제여부 메시지박스 추가
+
+### DB연결 CRUD 실습
+- BooksView, BooksViewModel 작업 실습
+- 1일차 MVVM 내용, 오늘 학습한 것 참고
+
+## 5일차
+
+### 영화즐겨찾기앱
+- OpenAPI + Youtube API
+- ...
