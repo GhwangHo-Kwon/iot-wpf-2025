@@ -253,7 +253,7 @@ IoT 개발자 WPF 학습리포지토리 2025
 7. Models > Genre(DivisionTbl) 모델 작업
 8. BookGenreViewModel DB처리 구현
 
-    https://github.com/user-attachments/assets/84b021a1-a827-470f-8a3a-19588f4e908e
+    https://github.com/user-attachments/assets/d902207b-76fc-42a8-8bca-80e7e6254585
 
 ## 4일차
 
@@ -340,6 +340,7 @@ IoT 개발자 WPF 학습리포지토리 2025
 9. 텍스트박스 한글 입력 우선 처리
 10. 실행시 텍스트박스에 포커스 가도록 처리
 
+    https://github.com/user-attachments/assets/58652ee6-7770-47c5-b81c-a8575b7427e4
 
 ## 6일차
 
