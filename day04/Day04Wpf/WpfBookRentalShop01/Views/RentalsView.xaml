@@ -26,8 +26,8 @@
 
         <DataGrid Grid.Row="1" Grid.Column="0" Margin="5"
               AutoGenerateColumns="False" IsReadOnly="True"
-              ItemsSource="{Binding Genres}"
-              SelectedItem="{Binding SelectedGenre, Mode=TwoWay}" >
+              ItemsSource="{Binding Rentals}"
+              SelectedItem="{Binding SelectedRental, Mode=TwoWay}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Idx}" Header="순번" />
                 <DataGridTextColumn Binding="{Binding MemberIdx}" Header="회원번호" Visibility="Hidden" />
@@ -57,25 +57,32 @@
                     Minimum="0" IsReadOnly="True"
                     mah:TextBoxHelper.AutoWatermark="True"
                     mah:TextBoxHelper.Watermark="순번"
-                    mah:TextBoxHelper.WatermarkAlignment="Left" />
+                    mah:TextBoxHelper.WatermarkAlignment="Left"
+                    Value="{Binding SelectedRental.Idx}"/>
 
                 <ComboBox Grid.Row="1" Margin="3"
-                    SelectedValue="Key"
+                    SelectedValuePath="Key"
                     DisplayMemberPath="Value"
-                    mah:TextBoxHelper.Watermark="회원" />
+                    ItemsSource="{Binding MemberName}"
+                    mah:TextBoxHelper.Watermark="회원"
+                    SelectedValue="{Binding SelectedRental.MemberIdx}"/>
 
                 <ComboBox Grid.Row="2" Margin="3"
-                    SelectedValue="Key"
+                    SelectedValuePath="Key"
                     DisplayMemberPath="Value"
-                    mah:TextBoxHelper.Watermark="책" />
+                    ItemsSource="{Binding BookName}"
+                    mah:TextBoxHelper.Watermark="책"
+                    SelectedValue="{Binding SelectedRental.BookIdx}"/>
 
                 <DatePicker Grid.Row="3" Margin="3"
                     mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.Watermark="대여일"/>
+                    mah:TextBoxHelper.Watermark="대여일"
+                    SelectedDate="{Binding SelectedRental.RentalDate}"/>
 
                 <DatePicker Grid.Row="4" Margin="3"
                     mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.Watermark="반납일"/>
+                    mah:TextBoxHelper.Watermark="반납일"
+                    SelectedDate="{Binding SelectedRental.ReturnDate}"/>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Right">
                     <Button Content="초기화" Margin="5,5,5,5" Width="70"

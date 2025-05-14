@@ -120,7 +120,6 @@ namespace WpfBookRentalShop01.ViewModels
                 await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
             }
 
-            LoadControlFromDb();
             LoadGridFromDb();
         }
 
