@@ -3,19 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls.Dialogs;
 using MovieFinder2025.Helpers;
 using MovieFinder2025.Models;
+using MovieFinder2025.Views;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace MovieFinder2025.ViewModels
@@ -171,6 +166,7 @@ namespace MovieFinder2025.ViewModels
                 sb.Append($"평점 : {currMovie.Vote_average.ToString("F2")}\n\n");
                 sb.Append(currMovie.Overview);
 
+                Common.LOGGER.Info($"{currMovie.Title} 상세정보 확인");
                 await this.dialogCoordinator.ShowMessageAsync(this, currMovie.Title, sb.ToString());
             }
         }
@@ -215,6 +211,7 @@ namespace MovieFinder2025.ViewModels
 
                     if (resultCnt > 0)
                     {
+                        Common.LOGGER.Info($"{SelectedMovieItem.Title} 즐겨찾기 추가");
                         await this.dialogCoordinator.ShowMessageAsync(this, "즐겨찾기추가", "즐겨찾기 추가 성공");
                     }
                     else
@@ -227,6 +224,7 @@ namespace MovieFinder2025.ViewModels
             {
                 if (ex.Message.ToUpper().Contains("DUPLICATE ENTRY"))
                 {
+                    Common.LOGGER.Warn($"{SelectedMovieItem.Title} 이미 추가된 영화!");
                     await this.dialogCoordinator.ShowMessageAsync(this, "즐겨찾기추가", "이미 추가된 즐겨찾기입니다.");
                 }
                 else
@@ -312,6 +310,7 @@ namespace MovieFinder2025.ViewModels
 
                     if (resultCnt > 0)
                     {
+                        Common.LOGGER.Info($"{SelectedMovieItem.Title} 즐겨찾기 삭제");
                         await this.dialogCoordinator.ShowMessageAsync(this, "즐겨찾기삭제", "즐겨찾기 삭제 성공");
                     }
                     else
@@ -332,7 +331,22 @@ namespace MovieFinder2025.ViewModels
         [RelayCommand]
         public async Task ViewMovieTrailer()
         {
-            await this.dialogCoordinator.ShowMessageAsync(this, "예고편보기", "즐겨찾기 삭제합니다!");
+            if (SelectedMovieItem == null)
+            {
+                await this.dialogCoordinator.ShowMessageAsync(this, "예고편보기", "영화를 선택하세요");
+                return;
+            }
+
+            var movieTitle = SelectedMovieItem.Title;
+            var viewModel = new TrailerViewModel(Common.DIALOGCOORDINATOR, movieTitle);
+            var view = new TrailerView
+            {
+                DataContext = viewModel,
+            };
+            view.Owner = Application.Current.MainWindow; // 부모창 중앙에 위치
+
+            Common.LOGGER.Info($"{SelectedMovieItem.Title} 유튜브 트레일러 실행!");
+            view.ShowDialog();
         }
     }
 }

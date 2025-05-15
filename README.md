@@ -356,4 +356,12 @@ IoT 개발자 WPF 학습리포지토리 2025
     <img src="./image/wpf0016.png" width="650">
 
 5. Youtube 예고편 보기
-    1. 
+    1. TrailerView, TrailerViewModel
+    2. WPF 기본 WebBrowser는 HTML5 기술 표현안됨. 오류가 많음
+    3. NuGet 패키지 - CefSharp.Wpf.NETCore WebBrowser 패키지 설치
+    4. CefSharp.Wpf.NETCore 설치 시 프로젝트 속성>빌드>일반, 플랫폼 대상을 Any CPU에서 x64로 변경!!
+    5. NuGet 패키지 - Google.Apis.YouTube.v3 설치
+
+6. 기타 작업 완료
+7. 결과 화면
+
