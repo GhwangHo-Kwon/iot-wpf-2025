@@ -347,4 +347,13 @@ IoT 개발자 WPF 학습리포지토리 2025
 ### MovieFinder 2025 (계속)
 1. 상태표시줄 시계 동작
 2. 상태표시줄 검색결과 건수 표시
-3. 즐겨찾기 DB연동...
+3. 로그 출력 정리
+4. 즐겨찾기 DB연동...
+    1. MySQL Workbench에서 moviefinder 데이터베이스(스키마) 생성
+    2. movieitems 테이블생성. 컬럼은 MovieItem.cs 속성과 동일
+    3. INSERT, UPDATE, DELETE 작업
+
+    <img src="./image/wpf0016.png" width="650">
+
+5. Youtube 예고편 보기
+    1. 
