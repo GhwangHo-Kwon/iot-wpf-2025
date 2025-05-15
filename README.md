@@ -353,7 +353,7 @@ IoT 개발자 WPF 학습리포지토리 2025
     2. movieitems 테이블생성. 컬럼은 MovieItem.cs 속성과 동일
     3. INSERT, UPDATE, DELETE 작업
 
-    <img src="./image/wpf0016.png" width="650">
+    <img src="./image/wpf0017.png" width="650">
 
 5. Youtube 예고편 보기
     1. TrailerView, TrailerViewModel
@@ -364,4 +364,6 @@ IoT 개발자 WPF 학습리포지토리 2025
 
 6. 기타 작업 완료
 7. 결과 화면
+
+    https://github.com/user-attachments/assets/a7ff0541-03f4-4081-996f-3585b9795fa3
 
