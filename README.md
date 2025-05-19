@@ -394,4 +394,5 @@ IoT 개발자 WPF 학습리포지토리 2025
 3. CefSharp.Wpf로 구글맵지도 표현
 4. 위도(Latitude), 경도(Longitude) 표현
 
+    https://github.com/user-attachments/assets/766c125d-766f-4f6a-9bf4-0b9dfd9f89dd
 
