@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BusanRestaurantApp.ViewModels
 {
@@ -27,7 +26,8 @@ namespace BusanRestaurantApp.ViewModels
             GetDataFromOpenApi();
         }
 
-        public ObservableCollection<BusanItem> BusanItems {
+        public ObservableCollection<BusanItem> BusanItems
+        {
             get => _busanItems;
             set => SetProperty(ref _busanItems, value);
         }
@@ -35,12 +35,13 @@ namespace BusanRestaurantApp.ViewModels
         public int PageNo { get => _pageNo; set => SetProperty(ref _pageNo, value); }
         public int NumOfRows { get => _numOfRows; set => SetProperty(ref _numOfRows, value); }
 
+
         [RelayCommand]
         private async Task GetDataFromOpenApi()
         {
             string baseUri = "http://apis.data.go.kr/6260000/FoodService/getFoodKr";
-            string myServiceKey = "VJR%2FOOT%2FI7iWfPZZNY7%2Fm6vtt5rB9nuhoHBvDA%2Bq8fjxDfKIPWHn4kMjtnQvSKcOM4U3%2BWKmt6Dpt2ChKA7Ubw%3D%3D";
-            
+            string myServiceKey = "JzmUY2JqiPqaZHmZ7VDke8wMFu3m%2FCXZSUCawmglK99g1cw5ytYYWZ%2F4VmiJz2Wn5MB1aBEA7N0YlXlJz%2B%2FK8A%3D%3D";
+
             StringBuilder strUri = new StringBuilder();
             strUri.Append($"serviceKey={myServiceKey}&");
             strUri.Append($"pageNo={PageNo}&");
@@ -55,14 +56,14 @@ namespace BusanRestaurantApp.ViewModels
             try
             {
                 var response = await client.GetStringAsync(totalOpenApi);
-                Common.LOGGER.Info(response);
+                // Common.LOGGER.Info(response);
 
                 // Newtonsoft.Json으로 Json처리방식
                 var jsonResult = JObject.Parse(response);
                 var message = jsonResult["getFoodKr"]["header"]["message"];
                 //await this.dialogCoordinator.ShowMessageAsync(this, "결과메시지", message.ToString());
                 var status = Convert.ToString(jsonResult["getFoodKr"]["header"]["code"]); // 00 이면 성공!
-                
+
                 if (status == "00")
                 {
                     var item = jsonResult["getFoodKr"]["item"];
@@ -71,7 +72,8 @@ namespace BusanRestaurantApp.ViewModels
                     foreach (var subitem in jsonArray)
                     {
                         //Common.LOGGER.Info(subitem.ToString());
-                        busanItems.Add(new BusanItem {
+                        busanItems.Add(new BusanItem
+                        {
                             Uc_Seq = Convert.ToInt32(subitem["UC_SEQ"]),
                             Main_Title = Convert.ToString(subitem["MAIN_TITLE"]),
                             Gugun_Nm = Convert.ToString(subitem["GUGUN_NM"]),
@@ -93,6 +95,7 @@ namespace BusanRestaurantApp.ViewModels
                     }
 
                     BusanItems = busanItems;
+                    Common.LOGGER.Info("OpenAPI 데이터 로드 완료!");
                 }
             }
             catch (Exception ex)
