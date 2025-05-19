@@ -384,3 +384,5 @@ IoT 개발자 WPF 학습리포지토리 2025
 3. MVVM 초기화
 4. UI 디자인 및 구현
 
+    https://github.com/user-attachments/assets/56597f60-4904-478d-bb72-7e2809cd8905
+
