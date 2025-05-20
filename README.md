@@ -481,3 +481,13 @@ IoT 개발자 WPF 학습리포지토리 2025
     - MahApps.Metro.IconPacks
     - Newtonsoft.Json
     - MQTTnet
+    - MySql.Data
+
+4. DB서버에 접속자 정보확인 쿼ㅗ리
+    ```sql
+    SELECT * FROM information_schema.processlist LIMIT 10; -- 데이터가 10건 이상이면 LIMIT 10은 삭제
+    ```
+
+5. WPF MVVM 전체구현
+6. MqttPub.py와 Publish된 IoT데이터 WPF에서 Subscribe 예제
+
