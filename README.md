@@ -498,6 +498,34 @@ IoT 개발자 WPF 학습리포지토리 2025
 ### 스마트홈 연동 모니터링앱 (계속)
 
 #### 스마트홈 기기 실제 IoT센서데이터 모니터링앱
+- 9일차 작성한 MQTT Subscribe 앱
+- SmartHome MQTT Json Key값
+    - L : Light 전등
+    - R : Rain(Water DropSensor)
+    - T : Temperature 온도
+    - H : Humidity 습도
+    - F : Fan 선풍기/에어컨
+    - V : Human Detection 칩입감지
+    - RL : Real Light 실제전등 켜짐
+    - CB : ChaimBell 벨푸시 여부
+
+- 실행화면 생략(9일차 화면과 동일)
 
 #### 스마트홈 WPF 실시간 시각화
+- NuGet 패키지
+    - MQTTnet
+    - Newtonsoft.Json
+    - NLog
+- WPFMqttSubApp.Models의 SensingInfo.cs 가져오기
+- MQTT 센서 데이터로 동작용 변수에 값 할당
+- 실행화면
 
+    <>
+
+    스마트홈 조작영상
+
+    <>
+
+    스마트홈 모니터링앱 동작영상
+
+### Github 대문 꾸미기
